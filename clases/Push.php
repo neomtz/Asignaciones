@@ -31,17 +31,17 @@ class Push extends Conexion
  {
    if($app == 0)
    {
-    $apiKey = 'AIzaSyCZt9geDybiE7G0OtRU-NC_89BU6bx6EcM';
-    $subtitulo = 'Jarboss app';
+    $apiKey = '';
+    $subtitulo = 'app';
    }
    if($app == 1)
    {
-    $apiKey = 'AIzaSyBKijhctWTdhREixOD3vOTHYVM_smcTgPs';
+    $apiKey = '';
     $subtitulo = 'Usuario';
    }
    if($app == 3)
    {
-    $apiKey = 'AIzaSyAwAmeYqbROR-JRrt9deIDzXQLuY__h2Dc';
+    $apiKey = '';
     $subtitulo = 'Asignaciones';
    }
   $msg = array('body' => substr(strip_tags($contenido),0,100),'title' => $username,'icon' => 'myicon','sound' => 'mySound');
