@@ -6,8 +6,8 @@ class Conexion
  {
   if(empty($token))
   {
-   $token = 'jarbos_metadata';
-   $db = 'jarbos_metadata';
+   $token = 'neo_metadata';
+   $db = 'neo_metadata';
    $server = 'localhost';
    $user = 'root';
    $pass = '';
