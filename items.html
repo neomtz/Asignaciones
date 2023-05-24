@@ -1,0 +1,38 @@
+    <!-- <link href="./css/bootstrap.min.css" rel="stylesheet" media="screen">  -->
+ <div class="itemBox column">
+	 
+        <h4 class="form-signin-heading">Editar Ticket</h4>
+        <h3 class="form-signin-heading hidden"> Reasignar </h3>
+  <h4><div id="reprog_motivos"></div></h4>
+  <p><div id="datos_sucursal"></div></p>
+  <form id="fec_editar_form">
+        <span id="sourcelab0" class="hidden">Identificador</span><input type="text" name="source0" id="source0" class="form-control spaces_inputs hidden source_select" placeholder="Cantidad" >
+        <span id="sourcelab1">Checklist</span>
+	<select class="form-control source_select" name="source1" onchange="setOptionMotivo(this.value)" >
+	 <option value="" selected>Seleccionar</option>
+	 <option value="54c6a304089e5">Visita Gerente</option>
+	</select>
+        <span id="sourcelab1">Grupo</span>
+	<select class="form-control source_select" name="source1" onchange="setOptionMotivo(this.value)" >
+	 <option value="" selected>Seleccionar</option>
+	 <option value="428">Demo</option>
+	</select>
+        <span id="sourcelab1">Sucursal</span>
+	<select class="form-control source_select" name="source1" onchange="setOptionMotivo(this.value)" >
+	 <option value="" selected>Seleccionar</option>
+	 <option value="1">001 San pedro</option>
+	</select>
+        <span id="sourcelab4">Fecha de atención</span>
+        <input id="source4" type='date' class="form-control spaces_inputs source_select"  placeholder="Seleccionar Fecha" name="source4"/>
+        <span id="sourcelab5" class="hidden">Asignar a:</span><select class="form-control hidden source_select" name="source5" id="source5" ></select>
+         <input type = 'reset' id = 'resetform' value = 'reset' class="hidden"/>
+        <button class="btn btn-lg btn-primary btn-block spaces_inputs" id="site_guardar_im"> Guardar </button>
+   </form>        
+         <button class="btn btn-lg btn-primary btn-block spaces_inputs hidden" style="background-color:lightslategrey;" id="site_articulo_borrar"> Borrar </button>
+         <button class="btn btn-lg btn-primary btn-block spaces_inputs hidden" style="background-color:lightslategrey;" id="site_editar_im" onclick="$('#fec_editar_form').submit()"> Actualizar </button>
+    </div> <!-- /container -->
+  <div style="display:none;" id="refresca_calendario">0</div>
+<script>
+      $( "#source4" ).datepicker("option", "dateFormat", "yy-mm-dd");
+</script>
+</html>

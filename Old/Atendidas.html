@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Asignaciones :: Sin asignar</title>
+        <script src="vendor/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="css/Addhoc.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+<div id="contenedorHeader"></div>
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <!-- Main Content -->
+
+    <div class="container" id="contenedorArticulos"  style="margin-top:80px;"> 
+      <div class="row" id="contenedorAsignaciones">        </div>
+    </div>
+
+    <div class="container">
+        <div class="row hide">
+            <div class="col-lg-12">                
+                <!-- Pager -->
+                <ul class="pager">
+                    <li class="next">
+                        <a onclick="getArticulos('0000000003secciones')" class="col-lg-12 manito colorFondoSecundario" id="cargarMas"style="background-color:#f78f1e;">Cargar más</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <!-- Footer -->
+    <footer id="contenedorPie" style="background-color:#003E7E;">    </footer>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./js/Extensiones.js"></script>
+    <script src="./js/inicio.js"></script>
+
+</body>
+<script>
+ getAsignaciones(5);
+</script>
+</html>

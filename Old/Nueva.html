@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Clean Blog - Sample Post</title>
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="css/Addhoc.css?v=0.2" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+<div id="contenedorHeader"></div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header">
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container" style="margin-top:70px;">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center" id="contenido"  >
+                    <p>
+                    <div class="post-heading">
+<form id="crearAsignacion" >					 
+  <select class="form-control" id="source1" name="source1">
+    <option value="0" selected>  Selecciona un checklist </option>
+    <option value="54c6a304089e5" > Visita Gerente  </option>
+  </select>						    
+						 <br>
+  <select class="form-control" id="source2" name="source2">
+    <option value="0" selected>  Selecciona un grupo </option>
+  </select>						 <br>
+  <select class="form-control" id="source3" name="source3">
+    <option value="0" selected>  Selecciona una sucursal </option>
+    <option > 0001 San pedro </option>
+  </select> <br>
+    <select class="form-control" id="source4" name="source4">
+    <option value="" selected>  Selecciona un usuario </option>
+    <option value="0">  Lo elijo más tarde </option>
+  </select>
+   <p>		
+                    
+					</div>
+					
+						<input class="form-control sinFondo" id="ex3" type="text" placeholder="Fecha de atención"  name="source5">
+						<input class="form-control sinFondo" id="ex3" type="text" value="" style="display:none;" name="source6">
+						<input class="form-control sinFondo" id="ex3" type="text" value="1"  style="display:none;" name="source7">
+<br>
+						<button   class="btn btn-primary btn-lg" >Guardar</button>
+</form>
+						</div>
+            </div>
+        </div>
+    </article>
+<p>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer id="contenedorPie">    </footer>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./js/Extensiones.js"></script>
+    <script src="./js/nueva.js"></script>
+</body>
+<script>
+$("#contenedorHeader").load("Cabecera.html?v=0.2");
+</script>
+</html>
+

@@ -1,0 +1,54 @@
+<link rel="stylesheet" href="../css/Extensiones.css">
+<div class="jb_popup_reporte" id="jb_reporte_loading">
+  <div class="jb_cont_rep">
+     <div class="jb_cent_rep">
+<div class="jb_cargando_rep">Cargando...</div>
+     </div>
+  </div>
+</div>
+
+  <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                     <i class="fa fa-bars"> </i>
+                </button>
+                <a class="navbar-brand" id="">Asignaciones </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                       <a id="inicio">Todas</a>
+                    </li>
+                    <li>
+                        <a id="sinAsignar">Pendientes</a>
+                    </li>
+                    <li>
+                       <a id="asignadas">Asignadas</a>
+	            </li>
+                    <li>
+                       <a  id="Atendidas">Atendidas</a>
+                    </li>
+                    <li>
+                       <a id="crear">Crear</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+<script>
+ $("#inicio").attr("href","index.html?source="+$_get("source"));
+ $("#crear").attr("href","Nueva.html?source="+$_get("source"));
+ $("#sinAsignar").attr("href","Pendientes.html?source="+$_get("source"));
+ $("#asignadas").attr("href","Asignadas.html?source="+$_get("source"));
+ $("#Atendidas").attr("href","Atendidas.html?source="+$_get("source"));
+</script>
+

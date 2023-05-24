@@ -1,0 +1,17 @@
+.articulos
+{
+  padding:5px;
+}
+.h-100
+{
+ padding:5px;
+}
+.manito
+{
+ cursor:pointer;
+}
+.articulos:hover
+{
+background-color:#CCC;
+}
+

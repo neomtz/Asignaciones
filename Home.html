@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Gerente: vista</title>
+
+    <!-- Theme CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="css/fullcalendar.min.css" rel="stylesheet">
+    <link href="css/awesomplete.css" rel="stylesheet">
+    <link href="css/select2.min.css" rel="stylesheet" />
+    <link href="css/Adhoccs.css" rel="stylesheet">
+
+</head>
+<body>
+
+      <nav class="navbar navbar-default" style="background-color:#dc4034;" role="navigation">
+    <div class="navbar-header"></div>
+  </nav>
+
+  <div class="container">
+   <div class="row">
+    <div class="col-md-9 col-md-offset-1">
+    <form class="form-inline" id="filtrara" role="form">
+        <input class="form-control" id="grupoF" placeholder="Grupos..." list="listaGrupos" />
+        <input class="form-control" id="usuarioF" placeholder="Usuario ..." list="listaUsuario" />
+        <input class="form-control" id="sucursalF" placeholder="Sucursal ..." list="listaSucursal" />
+        <button type="button" onclick="Filtrar()" id="filtrar" class="btn btn-primary"   ><span class="glyphicon glyphicon-search"></span> Filtrar</button>
+      </form>
+    </div>
+    <div class="col-md-1 ">
+      <button id="programar" class="btn btn-default" data-toggle="modal" data-target="#myModal">Programar visitas</button>
+    </div>
+   </div>
+  </div>
+<br>
+
+<div class="container">
+<div class="row">
+<div class="col-md-12 col-md-offset-1">
+
+  <div class="col-md-3" style="display: block; margin: 0 auto;">
+<button id="valor" class="btn-round"  disabled="true"></button>
+<p><h3 class="indicadoresCirculo">Realizadas</h3></p>
+</div>
+<div class="col-md-3">
+<button id="valor2" class="btn-round" disabled="true"></button>
+<p><h3 class="indicadoresCirculo">Pendientes</h3></p>
+</div>
+<div class="col-md-3">
+<button id="valor4" class="btn-round" disabled="true" style="font-size:24px;"></button>
+<p><h3 class="indicadoresCirculo">Cumplimiento</h3></p>
+</div>
+<div class="col-md-3">
+<button id="valor3" class="btn-round" disabled="true" style="font-size:24px;"></button>
+<p><h3 class="indicadoresCirculo">Calif. promedio</h3></p>
+</div>
+
+</div>
+</div>
+
+ <div class="container" >
+   <div class="col-md-12">
+
+     <div id='calendar'></div>
+   </div>
+ </div>
+ <br>
+
+ <div class="container">
+   <div class="row">
+     <div class="col-md-12">
+       <table class="table table-striped" id="tabla-asignaciones">
+         <thead id="asignaciones-thead">
+           <th>usuario</th>
+           <th>checklist</th>
+           <th>fecha</th>
+           <th>estado</th>
+         </thead>
+         <tbody id="asignaciones-tbody">
+         </tbody>
+       </table>
+     </div>
+   </div>
+ </div>
+<br>
+
+<!--grafica de barras -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <canvas id="myChart" width="400" height="150"></canvas>
+    </div>
+    </div>
+    </div>
+
+ <div id="myModal" class="modal fade bd-example-modal-lg" role="dialog">
+   <div id="tamañom" class="modal-dialog">
+     <!-- Modal content-->
+     <div class="modal-content">
+         <table class="table table-bordered ">
+            <thead>
+            <tr >
+            <th class="obj" onclick='abre(1)' id="a" style="">Por usuario</th>
+            <th class="obj" onclick='abre(2)' id="b" style="">Por sucursal</th>
+            <th class="obj" onclick='abre(3)' id="c" style="">Importacion</th>
+            </tr>
+            </thead>
+        </table>
+       <div class="modal-body" id="cuerpoNuevaAsignacion">
+<h4>Escribe el nombre del usuario al que le desees programar visitas </h4>
+<form class="form-inline" id="Fusuario" role="form"></form>
+       </div>
+    <div class="modal-footer">
+       <button id="programarmodal" onclick='' class="btn btn-md" >programar</button>
+       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+     </div>
+   </div>
+ </div>
+ </div>
+
+
+<div id="detalleAsignacion" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Detalle de la Asignación</h4>
+      </div>
+      <div class="modal-body">      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+ <div id="editarAsignacion" class="modal fade bd-example-modal-lg" role="dialog">
+   <div id="" class="modal-dialog">
+     <!-- Modal content-->
+     <div class="modal-content">
+       <div class="modal-body">
+		 <iframe style="width:100%;height:600px;border:0px;overflow:hidden;" id="formEditar"></iframe>
+       </div>
+    <div class="modal-footer">
+       <button type="button" class="btn btn-default" data-dismiss="modal" onclick="getAsignaciones()">Close</button>
+     </div>
+   </div>
+ </div>
+ </div>
+
+<datalist id="listaUsuario"></datalist>
+<datalist id="listaSucursal"></datalist>
+<datalist id="listaChecklist"></datalist>
+<datalist id="listaGrupos"></datalist>
+<div id="fechaBusqueda"></div>
+ <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-ui.custom.min.js"></script>
+ <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+ <script src="js/loading.js"></script>
+ <script src="js/moment.min.js"></script>
+ <script src="js/fullcalendar.min.js"></script>
+ <script src="js/es.js"></script>
+ <script src="js/select2.full.min.js"></script>
+ <script src="js/xlsx.core.min.js"></script>
+ <script src="js/FileSaver.min.js"></script>
+ <script src="js/tableExport.min.js"></script>
+ <script src="js/Chart.min.js"></script>
+ <script src="js/home.js?v=1.0.1"></script>
+ <script src="js/Extenciones.js"></script>
+</body>
+<script>
+calendario();
+abre(1);
+$( function() {
+  var dateFormat = "yy-mm-dd",
+    from = $( "#from" )
+      .datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        numberOfMonths: 1,
+        dateFormat: "yy-mm-dd"
+      })
+      .on( "change", function() {
+        to.datepicker( "option", "minDate", getDate( this ) );
+      }),
+    to = $( "#to" ).datepicker({
+      defaultDate: "+1w",
+      changeMonth: true,
+      numberOfMonths: 1,
+dateFormat: "yy-mm-dd"
+    })
+    .on( "change", function() {
+      from.datepicker( "option", "maxDate", getDate( this ) );
+    });
+
+  function getDate( element ) {
+    var date;
+    try {
+      date = $.datepicker.parseDate( dateFormat, element.value );
+    } catch( error ) {
+      date = null;
+    }
+
+    return date;
+  }
+} );
+</script>
+</html>

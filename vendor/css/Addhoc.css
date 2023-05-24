@@ -1,0 +1,26 @@
+.colorFondoPrimario
+{
+ background-color:#f78f1e;
+ border-color:#f78f1e;
+}
+.colorFondoSecundario
+{
+ background-color:#003E7E;
+}
+.colorLetraPrimario
+{
+ color:#003E7E;
+}
+.colorLetraSecundario
+{
+ color:#f78f1e;
+}
+.navbar-default .navbar-nav>li>a
+{
+ color:#003E7E;
+}
+.sinFondo
+{
+background-color:transparent;	
+	
+}

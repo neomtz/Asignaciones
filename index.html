@@ -1,0 +1,32 @@
+<script src="js/jquery.min.js"></script>
+<script src="js/Extenciones.js"></script>
+
+<script>
+$(document).ready(function ()
+{
+    if (typeof (Storage) !== "undefined")
+    {
+      // let token = $_get("source");
+    let token='cdf54bf468019e22f18045df2c19e27168ec8a82c03a83006f23147cbc3df412e8701a8e';
+    let idUsuario="9470003";
+
+    // if(token != null && $_get("source2"))
+    // {
+    //    sessionStorage.setItem("source",$_get("source"));
+    //    sessionStorage.setItem("idUsuario",$_get("source2"));
+       sessionStorage.setItem("source",token);
+       sessionStorage.setItem("idUsuario",idUsuario);
+        window.location.href="Asignaciones.html";
+     // }
+     // else
+     // {
+     //     sessionStorage.clear();
+     //     alert("No cuentas con un token válido para acceder a este módulo.")
+     //  }
+    }
+    else
+    {
+      alert("No puedes user este sistema.")
+    }
+});
+</script>

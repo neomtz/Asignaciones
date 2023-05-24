@@ -1,0 +1,62 @@
+.jbBoxFlex{font-family:arial;display: flex;display: -webkit-flex;display: -moz-flex;flex-direction: row;-webkit-flex-direction: row;flex-wrap: wrap;-webkit-flex-wrap: wrap;}
+.jbItemBoxFlex{flex-grow:1;-webkit-flex-grow:1;-moz-flex-grow:1;min-width:200px !important;margin:10px;margin-bottom:0;}
+.jbItemBoxFlex div{border:1px solid #d8d8d8;height:40px;overflow:hidden;padding:10px;background-color:#fff;cursor:pointer;transition-duration:0.2s;-webkit-transition-duration:0.2s;-moz-transition-duration:0.2s;}
+.jbItemBoxFlex p{font-family:arial;font-size:12px;overflow:hidden;color:#5C5C5C;margin:0;}
+.jbItemBoxFlex div:hover{transform : scale(1.08);-moz-transform : scale(1.08); -webkit-transform : scale(1.08);-o-transform : scale(1.08); -ms-transform : scale(1.05); }
+.jbItemBoxFlex div:active{background-color:#d8d8d8;}
+.hidden{display:block;overflow:hidden;white-space:nowrap;text-overflow: ellipsis;}
+
+.btn-file {position: relative;overflow: hidden;}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+.spaces_inputs{ margin-top:5px;}
+.jb_pup_img_coment
+{
+position: fixed;
+background-color:#2E2E2E;
+top: 0;
+bottom: 0;
+left: 0;
+right: 0;
+z-index:99;
+display:none;
+background: rgba(0, 0, 0, 0.8);
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#CC2E2E2E, endColorstr=#CC2E2E2E)";
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#CC2E2E2E, endColorstr=#CC2E2E2EF);
+}
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}

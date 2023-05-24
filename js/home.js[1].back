@@ -1,0 +1,521 @@
+function calendario(){
+
+$('#calendar').fullCalendar(
+{
+      height: 500,
+      fixedWeekCount: false,
+	  editable: true,
+	  eventLimit: true, // allow "more" link when too many events
+      lang: 'es',
+      header: 
+      {
+       left: 'prev,next today',
+       center: 'title',
+       right: 'month',
+      },
+    dayClick: function(date, jsEvent, view) 
+    {
+    }
+});
+
+	}
+
+function abre(a)
+{
+tipo='usuarios';
+if (a==1)
+{
+$("#cuerpoNuevaAsignacion").html("");
+$("#a").css('background-color', '#dc4034');
+$("#b").css('background-color', '#C9C9C9');
+$("#c").css('background-color', '#C9C9C9');id=""
+var contmodal='<h4>Escribe el nombre del usuario al que le desees programar visitas </h4>';
+contmodal+='<form class="form-inline" id="Fusuario" role="form"><div class="form-group"><label>usuario  </label><select id="lista_usuarios" class="form-control" placeholder="" ></select></div><br><br>'
+contmodal+='<div class="form-group"><input class="form-control" id="sucursal1" placeholder="" list="sucursallist" /><input class="form-control" id="checklist1" placeholder="" list="usuariocheck" /><datalist id="usuariocheck"></datalist><input type="date" id="date1" class="form-control" placeholder=""/><button type="button" class="btn btn-default" onclick="Mas(1)" style="float:right"><span class="glyphicon glyphicon-plus-sign"></span></button></div>';
+contmodal+='<div class="form-group"><input class="form-control" id="sucursal2" placeholder="" list="sucursallist" /><input class="form-control" id="checklist2" placeholder="" list="usuariocheck" /><datalist id="sucursallist"></datalist><input type="date" id="date2" class="form-control" placeholder=""/></div>';
+contmodal+='<div class="form-group"><input class="form-control" id="sucursal3" placeholder="" list="sucursallist" /><input class="form-control" id="checklist3" placeholder="" list="usuariocheck" /><input type="date" id="date3" class="form-control" placeholder=""/></div>';
+contmodal+='</form>'
+$("#cuerpoNuevaAsignacion").append(contmodal);
+var usuario = document.getElementById('lista_usuarios');
+$('#lista_usuarios').select2({
+  minimumInputLength: 3 // only start searching when the user has input 3 or more characters
+});
+$("#programarmodal").attr("onclick", "programar(1)");
+
+}
+
+if (a==2) {
+	tipo='sucursal';
+	$("#cuerpoNuevaAsignacion").html("");
+	$("#a").css('background-color', '#C9C9C9');
+	$("#b").css('background-color', '#dc4034');
+	$("#c").css('background-color', '#C9C9C9');
+
+	var contmodal='<h4>Escribe el nombre de la sucursal a la  que le desees programar visitas </h4>';
+	contmodal+='<form class="form-inline" id="Fsucursal" role="form"><div class="form-group"><label>sucursal  </label><select id="lista_sucursal" class="form-control"  placeholder=""   ></select></div><br><br>'
+	contmodal+='<div class="form-group"><input class="form-control" id="usuario1"  placeholder="" list="namelist" /><input class="form-control" id="checklist1" placeholder="" list="sucursalcheck"/><datalist id="sucursalcheck"></datalist><input type="date" id="date1" class="form-control" placeholder=""/><button type="button" class="btn btn-default" onclick="Mas(2)" style="float:right"><span class="glyphicon glyphicon-plus-sign"></span></button></div>';
+	contmodal+='<div class="form-group"><input class="form-control" id="usuario2" placeholder="" list="namelist" /><input class="form-control" id="checklist2" placeholder="" list="sucursalcheck"/><datalist id="namelist"></datalist><input type="date" id="date2" class="form-control" placeholder=""/></div>';
+	contmodal+='<div class="form-group"><input class="form-control" id="usuario3" placeholder="" list="namelist" /><input class="form-control" id="checklist3" placeholder="" list="sucursalcheck"/><input type="date" id="date3" class="form-control" placeholder=""/></div>';
+	contmodal+='</form>'
+	$("#cuerpoNuevaAsignacion").append(contmodal);
+var sucursal = document.getElementById('lista_sucursal');
+$('#lista_sucursal').select2({
+  minimumInputLength: 3 // only start searching when the user has input 3 or more characters
+});
+
+$("#programarmodal").attr("onclick", "programar(2)");
+	}
+
+
+
+if (a==3) {
+	$("#cuerpoNuevaAsignacion").html("");
+	$("#a").css('background-color', '#C9C9C9');
+	$("#b").css('background-color', '#C9C9C9');
+	$("#c").css('background-color', '#dc4034');
+
+	var contmodal='<form class="form-inline" role="form"><div class="form-group"><label style="margin-right:10px;"><h3>Paso 1</h3></label><select class="form-control" placeholder="" ><input type="button" class="btn btn-md btn-mute" value="generar excel" style="border-radius:0px;"></select></div><br>'
+      contmodal+='<div class="form-group"><label style="margin-right:10px;"><h3>Paso 2</h3></label>Llenar el excel descargado con la información de la empresa.</div><br>'
+			contmodal+='<div class="form-group"><label style="margin-right:10px;"><h3>Paso 3</h3></label><select class="form-control" placeholder="" ></select><input type="button" class="btn btn-md btn-mute" value="importar excel" style="border-radius:0px;"></div><br><br> </form>'
+
+	$("#cuerpoNuevaAsignacion").append(contmodal);
+}
+ getUsuarios();
+}
+//las siguientes funciones reemplazan la funcion listas(tipo)
+
+function getUsuarios()
+{
+		$.ajax(
+	  {
+	   type: "POST", // aqui defino el canal de envio de datos GET o POST
+	   dataType: "JSON", // aqui determino el tipo de dato en el que me debe responder el servidor, puede ser html /text / xml
+	   url: "https://www.jarboss.com/Usuarios/GET/?source=lista&source2=getall",
+		 data: { token: $_get("source") }, // url hacia el controlado
+		  beforeSend: function(event)
+		 {
+		   $("#site_active_indicador").text('1');
+	   },
+	   success: function(server)
+	   {
+		   $.each(server,function(a,b)
+		   {
+				 var lista='<option id="'+b.id_empleado+'">'+b.nombre+'</option>';
+				 $('#lista_usuarios').append(lista);
+		   });
+		 $("#site_active_indicador").text('0');
+		getChecklists(); //finaliza la petición y encadeno la siguiente esta es una buena practica.
+	   },
+	   error: function(e)
+	   {
+		   //console.log(e);
+		   $("#site_active_indicador").text('0');
+	   }
+	  }); //ajax
+}
+function getChecklists()
+{
+			$.ajax(
+			{
+			 type: "POST", // aqui defino el canal de envio de datos GET o POST
+			 dataType: "JSON", // aqui determino el tipo de dato en el que me debe responder el servidor, puede ser html /text / xml
+			 url: "https://www.jarboss.com/API/GET/?source1=checklist&source2=getsec",
+			 data:{ source: $_get("source") },// url hacia el controlado
+				beforeSend: function(event)
+			 {
+				 $("#site_active_indicador").text('1');
+			 },
+			 success: function(server)
+			 {
+				 $.each(server,function(a,b)
+				 {
+					 var lista='<option data-id="'+b.id+'" value="'+b.nombre+'"></option>';
+					 $('#usuariocheck').append(lista);
+				 });
+			 $("#site_active_indicador").text('0');
+			  getSucursales();//finaliza la petición y encadeno la siguiente esta es una buena practica.
+			 },
+			 error: function(e)
+			 {
+				 //console.log(e);
+				 $("#site_active_indicador").text('0');
+			 }
+			}); //ajax
+}
+function getSucursales()
+{
+			$.ajax(
+				{
+				 type: "POST", // aqui defino el canal de envio de datos GET o POST
+				 dataType: "JSON", // aqui determino el tipo de dato en el que me debe responder el servidor, puede ser html /text / xml
+				 url: "https://www.jarboss.com/Sucursales/GET/?source=sucursal&source2=getall",
+				 data:{ source: $_get("source") },// url hacia el controlado
+					beforeSend: function(event)
+				 {
+					 $("#site_active_indicador").text('1');
+				 },
+				 success: function(server)
+				 {
+					 $.each(server.secciones,function(a,b)
+					 {
+						 var lista='<option data-id="'+b.col1+'" value="'+b.col2+'"></option>';
+						 $('#sucursallist').append(lista);
+					 });
+				 $("#site_active_indicador").text('0');
+				  getAsignaciones();	
+				 },
+				 error: function(e)
+				 {
+					 //console.log(e);
+					 $("#site_active_indicador").text('0');
+				 }
+				}); //ajax
+}
+function getAsignaciones()
+{
+			$.ajax(
+				{
+				 type: "POST", // aqui defino el canal de envio de datos GET o POST
+				 dataType: "JSON", // aqui determino el tipo de dato en el que me debe responder el servidor, puede ser html /text / xml
+				 url: "https://jarboss.com/Asignaciones/GET/?source=asign&source2=geti&source3=12345",
+				 data:{ source: $_get("source"),source1: '' },// url hacia el controlado
+					beforeSend: function(event)
+				 {
+					 $("#site_active_indicador").text('1');
+				 },
+				 success: function(server)
+				 {
+				   if(server.length > 0 )
+				   {
+				     var eventos = [];
+					 $.each(server,function(a,b)
+					 {
+					   var evento = {};
+					   evento.id = b.col1;
+					   evento.title = b.col14;
+					   evento.description = 'Visita programada para del Checklist '+b.col7+' en la sucursal '+b.col13;
+					   evento.start = $.trim(b.col15);
+					   evento.color = '#B72818';
+					   evento.url = 'javascript:editarAsignacion(\''+b.col1+'\')';
+					     eventos.push(evento);
+					 });
+					 console.log(eventos);
+					$('#calendar').fullCalendar('removeEvents');
+					$("#calendar").fullCalendar('addEventSource', eventos);
+				   }
+				 $("#site_active_indicador").text('0');
+
+				 },
+				 error: function(e)
+				 {
+					 //console.log(e);
+					 $("#site_active_indicador").text('0');
+				 }
+				}); //ajax
+}
+/*no encadenes ajax sin esperar su respuesta (callback) respuesta, cada peticion debe ser un metodo distinto
+function listas(tipo){
+data={source: $_get("source")}
+
+	$.ajax(
+	  {
+	   type: "POST", // aqui defino el canal de envio de datos GET o POST
+	   dataType: "JSON", // aqui determino el tipo de dato en el que me debe responder el servidor, puede ser html /text / xml
+	   url: "https://www.jarboss.com/Usuarios/GET/?source=lista&source2=getall",
+		 data: data, // url hacia el controlado
+		  beforeSend: function(event)
+		 {
+		   $("#site_active_indicador").text('1');
+	   },
+	   success: function(server)
+	   {
+		   $.each(server,function(a,b)
+		   {
+				 var lista='<option id="'+b.id_login+'">'+b.nombre+'</option>';
+				 $('#lista_usuarios').append(lista);
+		   });
+		 $("#site_active_indicador").text('0');
+
+	   },
+	   error: function(e)
+	   {
+		   //console.log(e);
+		   $("#site_active_indicador").text('0');
+	   }
+	  }); //ajax
+
+
+		$.ajax(
+			{
+			 type: "POST", // aqui defino el canal de envio de datos GET o POST
+			 dataType: "JSON", // aqui determino el tipo de dato en el que me debe responder el servidor, puede ser html /text / xml
+			 url: "https://www.jarboss.com/API/GET/?source1=checklist&source2=getsec",
+			 data:data2,// url hacia el controlado
+				beforeSend: function(event)
+			 {
+				 $("#site_active_indicador").text('1');
+			 },
+			 success: function(server)
+			 {
+				 console.log(server);
+				 $.each(server,function(a,b)
+				 {
+					 var lista='<option data-id="'+b.id+'" value="'+b.nombre+'"></option>';
+					 $('#usuariocheck').append(lista);
+				 });
+			 $("#site_active_indicador").text('0');
+
+			 },
+			 error: function(e)
+			 {
+				 //console.log(e);
+				 $("#site_active_indicador").text('0');
+			 }
+			}); //ajax
+
+			$.ajax(
+				{
+				 type: "POST", // aqui defino el canal de envio de datos GET o POST
+				 dataType: "JSON", // aqui determino el tipo de dato en el que me debe responder el servidor, puede ser html /text / xml
+				 url: "https://www.jarboss.com/Sucursales/GET/?source=sucursal&source2=getall",
+				 data:data2,// url hacia el controlado
+					beforeSend: function(event)
+				 {
+					 $("#site_active_indicador").text('1');
+				 },
+				 success: function(server)
+				 {
+					 console.log(server);
+					 $.each(server.secciones,function(a,b)
+					 {
+						 var lista='<option data-id="'+b.col1+'" value="'+b.col2+'"></option>';
+						 $('#sucursallist').append(lista);
+					 });
+				 $("#site_active_indicador").text('0');
+
+				 },
+				 error: function(e)
+				 {
+					 //console.log(e);
+					 $("#site_active_indicador").text('0');
+				 }
+				}); //ajax
+
+
+
+	}
+
+
+if (tipo=='sucursal'){
+	data={source:'4486ed081baa7720cada703eaf58767fe7d578e84abbedd62b6f1a99d4153bcb3f691b96'}
+	  data2={token:'3011a40792eda9c05220f16a95adf278a0e9ecbdc40a362a070755b0bbc6032d011424ca'}
+$.ajax(
+	{
+	 type: "POST", // aqui defino el canal de envio de datos GET o POST
+	 dataType: "JSON", // aqui determino el tipo de dato en el que me debe responder el servidor, puede ser html /text / xml
+	 url: "https://www.jarboss.com/Sucursales/GET/?source=sucursal&source2=getall",
+	 data:data,// url hacia el controlado
+		beforeSend: function(event)
+	 {
+		 $("#site_active_indicador").text('1');
+	 },
+	 success: function(server)
+	 {
+		 console.log(server);
+		 $.each(server.secciones,function(a,b)
+		 {
+			 var lista='<option id="'+b.col1+'">'+b.col2+'</option>';
+			 $('#lista_sucursal').append(lista);
+		 });
+	 $("#site_active_indicador").text('0');
+
+	 },
+	 error: function(e)
+	 {
+		 //console.log(e);
+		 $("#site_active_indicador").text('0');
+	 }
+	}); //ajax
+
+	$.ajax(
+		{
+		 type: "POST", // aqui defino el canal de envio de datos GET o POST
+		 dataType: "JSON", // aqui determino el tipo de dato en el que me debe responder el servidor, puede ser html /text / xml
+		 url: "https://www.jarboss.com/API/GET/?source1=checklist&source2=getsec",
+		 data:data,// url hacia el controlado
+			beforeSend: function(event)
+		 {
+			 $("#site_active_indicador").text('1');
+		 },
+		 success: function(server)
+		 {
+			 console.log(server);
+			 $.each(server,function(a,b)
+			 {
+				 var lista='<option data-id="'+b.id+'" value="'+b.nombre+'"></option>';
+				 $('#sucursalcheck').append(lista);
+			 });
+		 $("#site_active_indicador").text('0');
+
+		 },
+		 error: function(e)
+		 {
+			 //console.log(e);
+			 $("#site_active_indicador").text('0');
+		 }
+		}); //ajax
+
+
+		$.ajax(
+			{
+		type: "POST", // aqui defino el canal de envio de datos GET o POST
+		dataType: "JSON", // aqui determino el tipo de dato en el que me debe responder el servidor, puede ser html /text / xml
+		url: "https://www.jarboss.com/Usuarios/GET/?source=lista&source2=getall",
+		data: data2, // url hacia el controlado
+		 beforeSend: function(event)
+		{
+			$("#site_active_indicador").text('1');
+		},
+		success: function(server)
+		{
+			$.each(server,function(a,b)
+			{
+				var lista='<option data-id="'+b.id_login+'" value="'+b.nombre+'"></option>';
+				$('#namelist').append(lista);
+			});
+		$("#site_active_indicador").text('0');
+
+		},
+		error: function(e)
+		{
+			//console.log(e);
+			$("#site_active_indicador").text('0');
+		}
+	 }); //ajax
+}
+*/
+function Mas(a)
+{
+
+if(a==1)
+{
+
+	var contador=$(".form-group").length;
+var contmodal='<div class="form-group"><input class="form-control" id="sucursal'+contador+'" placeholder="" list="sucursallist" /><input class="form-control" id="checklist'+contador+'" placeholder="" list="usuariocheck" /><input type="date" id="date'+contador+'" class="form-control" placeholder=""/></div>';
+	$("#Fusuario").append(contmodal);
+
+
+}
+
+
+if(a==2)
+{
+	var contador= $(".form-group").length;
+	  var contmodal='<div class="form-group"><input class="form-control" id="usuario'+contador+'" placeholder="" list="namelist" /><input class="form-control" id="checklist'+contador+'" placeholder="" list="sucursalcheck"/><input type="date" id="date'+contador+'" class="form-control" placeholder=""/><input class="form-control" placeholder="" /></div>';
+		$("#Fsucursal").append(contmodal);
+
+}
+
+}
+
+function programar(a){
+
+if(a==1)
+{
+	var contador= $(".form-group").length;
+idusuario = $("#lista_usuarios option:selected").attr("id");
+for(var i=1; i>0 && i<contador;i++)
+{
+	var g = $('#sucursal'+i).val();
+var idsucursal = $('#sucursallist option[value ="'+g+'"]').attr('data-id');
+var s = $('#checklist'+i).val();
+var idchecklist = $('#usuariocheck option[value ="'+s+'"]').attr('data-id');
+var fecha = $('#date'+i).val();
+
+if(idsucursal!= undefined && idchecklist!=undefined && fecha!=''){
+
+var dataPost={source1:idchecklist, source2:'', source3:idsucursal, source4:idusuario, source5:fecha, source6:'', source7:'1', source: $_get("source") }
+
+$.ajax(
+  {
+   type: "POST",
+   dataType: "JSON",
+   url: "https://www.jarboss.com/Asignaciones/POST/?source=asign&source2=setasign",
+   data: dataPost,
+   beforeSend: function(event)
+   {
+	   $("#site_active_indicador").text('1');
+
+   },
+   success: function(server)
+   {
+	 if(server.status == 'ok')
+	 {
+	   alert("Visita (s) agendada")
+		getAsignaciones();
+     }
+     else
+	   alert("Error al actualizar")
+	 $("#site_active_indicador").text('0');
+   },
+   error: function(e)
+   {
+	   //console.log(e);
+	   $("#site_active_indicador").text('0');
+   }
+  }); //ajax
+}
+
+}
+}
+if(a==2)
+{
+	var contador= $(".form-group").length;
+ idsucursal = $("#lista_sucursal option:selected").attr("id");
+
+for(var i=1; i>0 && i<contador;i++)
+{
+var g = $('#usuario'+i).val();
+var idusuario = $('#namelist option[value ="'+g+'"]').attr('data-id');
+var s = $('#checklist'+i).val();
+var idchecklist = $('#sucursalcheck option[value ="'+s+'"]').attr('data-id');
+var fecha = $('#date'+i).val();
+if(idusuario!= undefined && idchecklist!=undefined && fecha!=''){
+
+var dataPost={source1:idchecklist, source2:'', source3:idsucursal, source4:idusuario, source5:fecha, source6:'', source7:'1', source: $_get("source") }
+$.ajax(
+  {
+   type: "POST",
+   dataType: "JSON",
+   url: "https://www.jarboss.com/Asignaciones/POST/?source=asign&source2=setasign",
+   data: dataPost,
+   beforeSend: function(event)
+   {
+	   $("#site_active_indicador").text('1');
+
+   },
+   success: function(server)
+   {
+	 if(server.status == 'ok')
+	 {
+	   alert("Visita (s) agendada")
+		getAsignaciones();
+	 }
+     else
+	   alert("Error al actualizar")
+	 $("#site_active_indicador").text('0');
+   },
+   error: function(e)
+   {
+	   //console.log(e);
+	   $("#site_active_indicador").text('0');
+   }
+  }); //ajax
+}
+}}}
+function editarAsignacion(id)
+{
+	$("#editarAsignacion").modal('show');
+   $("#formEditar").attr('src','https://www.jarboss.com/Asignaciones/Editar.html?source='+$_get("source")+'&source1='+id+'&source2=externo')
+}
+

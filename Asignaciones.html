@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Asignaciones</title>
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://www.jarboss.com/Plugins/Alertify/alertify.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css">
+    <link href="css/fullcalendar.min.css" rel="stylesheet">
+    <link href="css/awesomplete.css" rel="stylesheet">
+    <link href="css/select2.min.css" rel="stylesheet" />
+    <link href="css/asignaciones.css" rel="stylesheet">
+
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark cabecera" style="margin-bottom:50px;">
+    <a class="navbar-brand" href="#" id=""><img src="https://www.jarboss.com/imagenes/imagenesIndex/logo_white_jb.png" style="width:120px;"  alt=""></a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item" id="inicio">
+          <a class="nav-link" href="./Asignaciones.html">Asignaciones</a>
+        </li>
+        <li class="nav-item" id="inicio">
+          <a class="nav-link" href="./Tickets.html">Tickets</a>
+        </li>
+        <li class="nav-item" id="inicio">
+          <a class="nav-link" href="./?source3=salir">Salir</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <form class="form-inline" id="filtrara" role="form" style="display:none;">
+  <div class="container">
+    <div class="row">
+          <div class="col-md-3" >
+            <input class="form-control" id="grupoF" placeholder="Grupos..." list="listaGrupos" />
+          </div>
+          <div class="col-md-3">
+            <input class="form-control" id="usuarioF" placeholder="Usuario ..." list="listaUsuario" />
+          </div>
+          <div class="col-md-3">
+            <input class="form-control" id="sucursalF" placeholder="Sucursal ..." list="listaSucursal" />
+          </div>
+          <div class="col-md-3">
+            <button type="button" onclick="Filtrar()" id="filtrar" class="btn btn-primary"   ><span class="glyphicon glyphicon-search"></span> Filtrar</button>
+          </div>
+    </div>
+  </div>
+</form>
+<div class="container">
+  <div class="row">
+    <div class="col-md-5">
+      <select id="checklist" class="form-control col-md-12 esplat">   </select>
+    </div>
+    <div class="col-md-5">
+      <select id="sucursal" class="form-control col-md-12 esplat"><option value="*">Todas</option></select>
+    </div>
+    <div class="col-md-2" id="contenedorSucursal">
+      <button class="form-control col-md-12 esplat" onclick="getAsignaciones()">Buscar</button>
+    </div>
+  </div>
+</div>
+<br>
+<div class="container">
+ <div class="row">
+  <div class="col-md-3" >
+    <button class="calen btn btn-info " id="programadas" onclick="calendario('12345');">Programados  <div id="totalAsign" class="rounded-circle badge badge-light">0</div> </button>
+  </div>
+  <div class="col-md-3">
+    <button class="calen btn btn-warning" id="no_realizadas" onclick="calendario('4');">Pendientes <div id="valor2" class="rounded-circle badge badge-light">0</div></button>
+  </div>
+  <div class="col-md-3">
+    <button class="calen btn btn-success" id="realizadas" onclick="calendario('5');">Realizados <div id="valor" class="rounded-circle badge badge-light">0</div></button>
+  </div>
+  <div class="col-md-1">
+    <button id="programar" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i></button>
+  </div>
+  <div class="col-md-1">
+    <button id="visualizar" class="btn btn-primary" onclick="visualizacion()"><i class="fa fa-calendar"></i></button>
+  </div>
+  <div class="col-md-1" style="display:;" id="ctnImportador">
+    <!-- <button id="visualizar" class="btn btn-primary" onclick="$('#cargaMasiva').modal('show')"><i class="fa fa-upload"></i></button> -->
+    <button  type="button" class="btn btn-primary" name="button" data-toggle="modal" data-target="#upload_imagen" onclick="$('#upload_imagen').modal('show');" title="Importar"><i class="fa fa-upload"></i></button>
+  </div>
+ </div>
+</div>
+<br>
+ <div class="container contenedor" id="contenedorCalendario" ><div id='calendar'></div> </div>
+<br>
+
+ <div class="container contenedor" id="contenedorTabla" style="display:none;">
+   <div class="row">
+     <div class="col-md-12">
+       <table class="table table-striped" id="tabla-asignaciones">
+         <thead id="asignaciones-thead">
+           <th>usuario</th>
+           <th>checklist</th>
+           <th>fecha</th>
+           <th>estado</th>
+         </thead>
+         <tbody id="asignaciones-tbody">
+         </tbody>
+         <tfoot class="pie"></tfoot>
+       </table>
+     </div>
+   </div>
+ </div>
+<br>
+<div class="container" id="contenedorExportar"></div>
+<!--grafica de barras -->
+<div class="container" id="contenedorGrafico2">
+  <div class="row">
+    <div class="col-md-12" id="contenedorGrafico">
+      <canvas id="myChart" width="400" height="150"></canvas>
+    </div>
+    </div>
+    </div>
+
+ <div id="myModal" style="overflow-x: auto;" class="modal fade" role="dialog">
+   <div id="tamañom" class="modal-dialog modal-xl" style="float: left;margin-left: 1rem;">
+     <!-- Modal content-->
+     <div class="modal-content" style="min-width: 1020px;width:1300px">
+         <table class="table table-bordered ">
+            <thead>
+            <tr >
+            <th class="obj" onclick='abre(1)' id="a" style="">Por usuario</th>
+            <th class="obj" onclick='abre(2)' id="b" style="">Por sucursal</th>
+            <!--th class="obj" onclick='abre(3)' id="c" style="">Importacion</th-->
+            </tr>
+            </thead>
+        </table>
+       <div class="modal-body" id="cuerpoNuevaAsignacion">
+<h4>Escribe el nombre del usuario al que le desees programar visitas </h4>
+<form class="form-inline" id="Fusuario" role="form"></form>
+       </div>
+    <div class="modal-footer">
+       <button id="programarmodal" onclick='' class="btn btn-success" >Programar</button>
+       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+     </div>
+   </div>
+ </div>
+ </div>
+
+
+<div id="detalleAsignacion" class="modal fade" id="eventoo">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header" style="background-color: #292b2c; color:white">
+          <h4 class="modal-title" align="center" id="nomUser1"></h4>
+          <button type="button" class="close" data-dismiss="modal">×</button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form>
+              <input id="idAsignacion" style="display:none" name="">
+            <input id="idUser" style="display:none" name="">
+            <div class="form-group">
+              <label for=""><strong>Sucursal:</strong></label>
+              <input id="sucursalUser" readonly="" class="form-control">
+            </div>
+            <div class="form-group">
+              <label><strong>Checklist:</strong></label>
+              <input id="checkUser" readonly="" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for=""><strong>Grupo:</strong></label>
+              <input type="text" id="objUser" readonly="" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for=""><strong>Fecha de inicio:</strong></label>
+              <input type="text" class="form-control" readonly="" id="fechaiUser">
+            </div>
+            <div class="form-group">
+              <label for=""><strong>Fecha de terminación:</strong></label>
+              <input type="text" id="fechafUser" readonly="" class="form-control">
+            </div>
+
+          </form>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" id="btneliminar">Eliminar</button>
+            <a class="btn btn-primary" id="linkReporte" target="_blank">Ver reporte</a>
+            <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <div id="editarAsignacion" class="modal fade bd-example-modal-lg" role="dialog">
+   <div id="" class="modal-dialog">
+     <!-- Modal content-->
+     <div class="modal-content">
+       <div class="modal-body">
+		 <iframe style="width:100%;height:600px;border:0px;overflow:hidden;" id="formEditar"></iframe>
+       </div>
+    <div class="modal-footer">
+       <button type="button" class="btn btn-default" data-dismiss="modal" onclick="getAsignaciones()">Close</button>
+     </div>
+   </div>
+ </div>
+ </div>
+ <div id="cargaMasiva" class="modal fade bd-example-modal-lg" role="dialog">
+   <div id="" class="modal-dialog">
+     <!-- Modal content-->
+     <div class="modal-content">
+       <div class="modal-body">
+       <form id="registroPrograma" method="post" enctype="multipart/form-data">
+        <div class="form-group" id="contenedorNuevoDropzone">
+          <label for="video">Cargar archivo en formato xlsx</label>
+          <input type="text" class="form-control" name="source1" id="source1" readonly>
+        </div>
+        <table class="table table-responsive table-bordered">
+          <thead>
+            <tr> <td colspan="7">Resultados Invalidos</td></tr>
+            <tr><th>Sucursal</th><th>Grupo</th><th>Checklist</th><th>FI</th><th>FF</th><th>Usuario</th><th>Validos</th></tr>
+          </thead>
+          <tbody id="resInvalidos"></tbody>
+          <tfoot><tr><td colspan="6">Sin resultados</td></tr></tfoot>
+        </table>
+        <button type="button" class="btn btn-info" onclick="leerArchivo()">Importar</button>
+      </form>
+     </div>
+   </div>
+ </div>
+ </div>
+ <div class="modal fade" id="upload_imagen" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <label id="Header">	Import excel</label>
+          </div>
+          <div class="modal-body">
+            <form class="" method="POST" action="#" enctype="multipart/form-data" id="load_excel_form">
+              <div class="row">
+                <div class="col-sm-8">
+                  <input id="documento" type="file" name="select_excel" class="form-control" value="" accept=".csv,.xlsx,.xls">
+                </div>
+                <div class="col-sm-2">
+                  <button id="botonimport" type="submit" class="btn btn-primary" name="button">Importar</button>
+                </div>
+              </div>
+            </form>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="myModalClose"> <i class="fa fa-close"></i> Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+ <footer class="footer">
+     <div class="container">
+         <table class="table">
+         <thead>
+             <tr>
+                  <td>© Software Jarboss. Todos los derechos reservados.</td><td id="version"></td>
+             </tr>
+         </thead>
+         </table>
+     </div>
+ </footer>
+<datalist id="listaUsuario"></datalist>
+<datalist id="listaSucursal"></datalist>
+<datalist id="listaChecklist"></datalist>
+<datalist id="listaGrupos"></datalist>
+<div id="fechaBusqueda" style="display:none;"></div>
+ <script src="https://www.jarboss.com/Jquery/v2/jquery.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.6/dist/loadingoverlay.min.js"></script>
+  <script src="js/jquery-ui.custom.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+  <script src="https://www.jarboss.com/Plugins/Alertify/alertify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.js"></script>
+ <script src="js/moment.min.js"></script>
+ <script src="js/fullcalendar.min.js"></script>
+ <script src="js/es.js"></script>
+ <script src="js/select2.full.min.js"></script>
+ <script src="js/xlsx.core.min.js"></script>
+ <script src="js/FileSaver.min.js"></script>
+ <script src="js/tableExport.min.js"></script>
+ <script src="js/Chart.min.js"></script>
+ <script src="js/asignaciones.js?v=3.2.2"></script>
+ <script src="js/Extenciones.js"></script>
+ <script src="js/importador.js?v=1.3.1"></script>
+</body>
+<script>
+  crearDropzone(0)
+</script>
+</html>

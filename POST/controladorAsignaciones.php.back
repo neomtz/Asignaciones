@@ -1,0 +1,113 @@
+<?php
+include '../clases/Asignaciones.php';
+$art = new Asignaciones($token);
+
+if($_GET['source2'] == 'seti')
+{
+ $json = '{';
+ $fin = $_GET['source3'] - 1;
+ for($x = 0; $x < $_GET['source3'] ; $x++)
+ {
+  $json .= '"'.col.$x.'":"'.$_POST["source$x"].'"';
+   if($x < $fin)
+    $json .= ',';
+ }
+ $json .= '}';
+ $id = "IM-".uniqid();
+  if($art->setItem($json,$id) && $art->setItemAsignado($id,0,1))
+  {
+   $server['status'] = 'ok'; 
+   $server['id'] = $id; 
+   $art->conexion->commit();
+  }
+  else
+  {
+   $server['status'] = 'error'; 
+   $art->conexion->rollback();
+  }
+}
+if($_GET['source2'] == 'updia')
+{
+ $json = '{';
+ $fin = $_GET['source3'];
+ $stop = $_GET['source3'] + 1;
+ for($x = 0; $x < $stop ; $x++)
+ {
+  $json .= '"'.col.$x.'":"'.$_POST["source$x"].'"';
+   if($x < $fin)
+    $json .= ',';
+ }
+ $json .= '}';
+  if($art->updItem($json,$_POST['source0']) && $art->delItemsAsignados($_POST['source0']) && $art->setItemAsignado($_POST['source0'],$_POST['source5'],2))
+  {
+   $server['status'] = 'ok'; 
+   $server['json'] = $json; 
+   $art->conexion->commit();
+  }
+  else
+  {
+   $server['status'] = 'error'; 
+   $art->conexion->rollback();
+  }
+}
+if($_GET['source2'] == 'updir')
+{
+ $json = '{';
+ $fin = $_GET['source3'];
+ $stop = $_GET['source3'] + 1;
+ for($x = 1; $x < $stop ; $x++)
+ {
+  $json .= '"'.col.$x.'":"'.$_POST["source$x"].'"';
+   if($x < $fin)
+    $json .= ',';
+ }
+ $json .= '}';
+  if($art->updItem($json,$_POST['source0']) && $art->delItemsAsignados($_POST['source0']) && $art->setItemAsignado($_POST['source0'],$_POST['source5'],3))
+  {
+   $server['status'] = 'ok'; 
+   $server['json'] = $json; 
+   $art->conexion->commit();
+  }
+  else
+  {
+   $server['status'] = 'error'; 
+   $art->conexion->rollback();
+  }
+}
+if($_GET['source2'] == 'updi')
+{
+ $json = '{';
+ $fin = $_GET['source3'];
+ $stop = $_GET['source3'] + 1;
+ for($x = 1; $x < $stop ; $x++)
+ {
+  $json .= '"'.col.$x.'":"'.$_POST["source$x"].'"';
+   if($x < $fin)
+    $json .= ',';
+ }
+ $json .= '}';
+  if($art->updItem($json,$_POST['source0']))
+  {
+   $server['status'] = 'ok'; 
+   $server['json'] = $json; 
+   $art->conexion->commit();
+  }
+  else
+  {
+   $server['status'] = 'error'; 
+   $art->conexion->rollback();
+  }
+}
+if($_GET['source2'] == 'updstatus')
+{
+  if($art->updItemAsignadoStatus($_POST['source1'],$_POST['source2'],$_POST['source3']))
+  {
+   $server['status'] = 'ok';
+   $art->conexion->commit();
+  }
+  else
+  {
+   $server['status'] = 'error';
+   $art->conexion->rollback();
+  }
+}

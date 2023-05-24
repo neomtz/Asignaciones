@@ -1,0 +1,42 @@
+.obj {
+background-color: #C9C9C9;
+text-align: center;
+}
+.btn
+{
+border-radius: 25px;
+}
+
+.modal-footer{
+  border-top: 0px !important;
+}
+
+.opciones button {
+  color: white;
+    width: 30px !important;
+    height: 30px !important;
+    margin-bottom: 3px !important;
+    margin-left: 5px !important;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.btnMas{
+  background: #5bc0de;
+}
+.btnCancelar{
+  background: #d9534f;
+}
+
+#btnAsignar{
+  width: 90px;
+  height: 35px;
+  border-radius: 5px !important;
+}
+
+.validar{
+  background-color: #595959;
+
+}
+.asignarTick{
+  background: #262626;
+}
